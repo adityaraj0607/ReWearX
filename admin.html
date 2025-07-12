@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - ReWearX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b border-emerald-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-emerald-600">ReWearX</a>
+                    <span class="ml-4 px-3 py-1 bg-red-100 text-red-800 text-sm font-medium rounded-full">Admin</span>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="browse.html" class="text-gray-700 hover:text-emerald-600 transition">Browse</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition">Dashboard</a>
+                    <div class="relative">
+                        <button id="profileDropdown" class="flex items-center space-x-2 text-gray-700 hover:text-emerald-600">
+                            <div id="userAvatar" class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i data-feather="user" class="w-4 h-4"></i>
+                            </div>
+                            <span id="userName">Admin</span>
+                        </button>
+                        <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border">
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Admin Access Check -->
+    <div id="accessDenied" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 text-center">
+        <div class="max-w-md mx-auto">
+            <i data-feather="shield-off" class="w-16 h-16 text-red-500 mx-auto mb-4"></i>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Access Denied</h2>
+            <p class="text-gray-600 mb-6">You don't have permission to access this admin panel.</p>
+            <a href="dashboard.html" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                Go to Dashboard
+            </a>
+        </div>
+    </div>
+
+    <!-- Admin Content -->
+    <div id="adminContent" class="hidden max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Admin Dashboard</h1>
+            <p class="text-gray-600">Manage community content and monitor platform activity.</p>
+        </div>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Pending Items</p>
+                        <p id="pendingItemsCount" class="text-3xl font-bold text-orange-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="clock" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Reported Items</p>
+                        <p id="reportedItemsCount" class="text-3xl font-bold text-red-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="flag" class="w-6 h-6 text-red-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Users</p>
+                        <p id="totalUsersCount" class="text-3xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="users" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Total Items</p>
+                        <p id="totalItemsCount" class="text-3xl font-bold text-emerald-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="package" class="w-6 h-6 text-emerald-600"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Navigation -->
+        <div class="mb-6">
+            <nav class="flex space-x-8" aria-label="Tabs">
+                <button id="tabPending" class="border-b-2 border-emerald-500 py-2 px-1 text-sm font-medium text-emerald-600">
+                    Pending Approval
+                </button>
+                <button id="tabReported" class="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Reported Items
+                </button>
+                <button id="tabUsers" class="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    User Management
+                </button>
+                <button id="tabAnalytics" class="border-b-2 border-transparent py-2 px-1 text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300">
+                    Analytics
+                </button>
+            </nav>
+        </div>
+
+        <!-- Pending Approval Tab -->
+        <div id="pendingTab" class="tab-content">
+            <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-gray-900">Items Pending Approval</h2>
+                        <div class="flex space-x-2">
+                            <button id="approveAllBtn" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                                Approve All
+                            </button>
+                            <button id="refreshPendingBtn" class="px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                                Refresh
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div id="pendingItemsContainer">
+                        <div class="flex justify-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Reported Items Tab -->
+        <div id="reportedTab" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                <div class="p-6 border-b border-gray-200">
+                    <h2 class="text-xl font-semibold text-gray-900">Reported Items</h2>
+                </div>
+                <div class="p-6">
+                    <div id="reportedItemsContainer">
+                        <div class="flex justify-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- User Management Tab -->
+        <div id="usersTab" class="tab-content hidden">
+            <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                <div class="p-6 border-b border-gray-200">
+                    <div class="flex items-center justify-between">
+                        <h2 class="text-xl font-semibold text-gray-900">User Management</h2>
+                        <div class="flex space-x-2">
+                            <input type="text" 
+                                   id="userSearchInput" 
+                                   placeholder="Search users..." 
+                                   class="px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500">
+                            <button id="searchUsersBtn" class="px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                                Search
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-6">
+                    <div id="usersContainer">
+                        <div class="flex justify-center py-8">
+                            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Analytics Tab -->
+        <div id="analyticsTab" class="tab-content hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                <div class="bg-white rounded-xl shadow-sm border border-emerald-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Platform Growth</h3>
+                    <div class="space-y-4">
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">Items uploaded this week</span>
+                            <span id="itemsThisWeek" class="font-medium text-emerald-600">0</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">New users this week</span>
+                            <span id="usersThisWeek" class="font-medium text-blue-600">0</span>
+                        </div>
+                        <div class="flex items-center justify-between">
+                            <span class="text-gray-600">Exchanges this week</span>
+                            <span id="exchangesThisWeek" class="font-medium text-purple-600">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-xl shadow-sm border border-emerald-100 p-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">Category Breakdown</h3>
+                    <div id="categoryBreakdown" class="space-y-3">
+                        <!-- Category stats will be loaded here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Item Details Modal -->
+    <div id="itemModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-semibold">Item Details</h3>
+                    <button id="closeItemModal" class="text-gray-400 hover:text-gray-600">
+                        <i data-feather="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            <div id="modalItemContent" class="p-6">
+                <!-- Item details will be loaded here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/admin.js"></script>
+    <script>feather.replace()</script>
+</body>
+</html>

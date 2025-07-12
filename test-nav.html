@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReWearX - Quick Test</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-8">
+    <div class="max-w-4xl mx-auto">
+        <h1 class="text-3xl font-bold text-green-600 mb-8">ReWearX - Page Navigation Test</h1>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Main Pages</h2>
+                <ul class="space-y-2">
+                    <li><a href="index.html" class="text-blue-600 hover:underline" target="_blank">Home (index.html)</a></li>
+                    <li><a href="login.html" class="text-blue-600 hover:underline" target="_blank">Login Page</a></li>
+                    <li><a href="signup.html" class="text-blue-600 hover:underline" target="_blank">Sign Up Page</a></li>
+                    <li><a href="browse.html" class="text-blue-600 hover:underline" target="_blank">Browse Items</a></li>
+                    <li><a href="dashboard.html" class="text-blue-600 hover:underline" target="_blank">Dashboard</a></li>
+                    <li><a href="upload.html" class="text-blue-600 hover:underline" target="_blank">Upload Items</a></li>
+                    <li><a href="admin.html" class="text-blue-600 hover:underline" target="_blank">Admin Panel</a></li>
+                    <li><a href="item.html" class="text-blue-600 hover:underline" target="_blank">Item Details</a></li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">JS Modules</h2>
+                <ul class="space-y-2">
+                    <li><a href="js/firebase-config.js" class="text-blue-600 hover:underline" target="_blank">Firebase Config</a></li>
+                    <li><a href="js/auth.js" class="text-blue-600 hover:underline" target="_blank">Authentication</a></li>
+                    <li><a href="js/browse.js" class="text-blue-600 hover:underline" target="_blank">Browse Logic</a></li>
+                    <li><a href="js/dashboard.js" class="text-blue-600 hover:underline" target="_blank">Dashboard Logic</a></li>
+                    <li><a href="js/upload.js" class="text-blue-600 hover:underline" target="_blank">Upload Logic</a></li>
+                    <li><a href="js/item.js" class="text-blue-600 hover:underline" target="_blank">Item Details Logic</a></li>
+                    <li><a href="js/admin.js" class="text-blue-600 hover:underline" target="_blank">Admin Logic</a></li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Utilities</h2>
+                <ul class="space-y-2">
+                    <li><a href="js/utils/validators.js" class="text-blue-600 hover:underline" target="_blank">Validators</a></li>
+                    <li><a href="js/utils/firestore-ops.js" class="text-blue-600 hover:underline" target="_blank">Firestore Operations</a></li>
+                    <li><a href="js/utils/cache.js" class="text-blue-600 hover:underline" target="_blank">Cache Management</a></li>
+                </ul>
+            </div>
+            
+            <div class="bg-white p-6 rounded-lg shadow">
+                <h2 class="text-xl font-semibold mb-4">Assets & Config</h2>
+                <ul class="space-y-2">
+                    <li><a href="css/styles.css" class="text-blue-600 hover:underline" target="_blank">Main Styles</a></li>
+                    <li><a href="firebase.json" class="text-blue-600 hover:underline" target="_blank">Firebase Config</a></li>
+                    <li><a href="package.json" class="text-blue-600 hover:underline" target="_blank">Package.json</a></li>
+                    <li><a href="test-firebase.html" class="text-blue-600 hover:underline" target="_blank">Firebase Test</a></li>
+                </ul>
+            </div>
+        </div>
+        
+        <div class="bg-green-50 border border-green-200 rounded-lg p-6 mt-8">
+            <h2 class="text-xl font-semibold text-green-800 mb-4">Quick Tests</h2>
+            <div class="space-y-4">
+                <button onclick="testFirebase()" class="bg-green-600 text-white px-4 py-2 rounded hover:bg-green-700">Test Firebase Connection</button>
+                <button onclick="testNavigation()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700 ml-4">Test Navigation</button>
+                <button onclick="testJSModules()" class="bg-purple-600 text-white px-4 py-2 rounded hover:bg-purple-700 ml-4">Test JS Modules</button>
+            </div>
+            <div id="test-results" class="mt-4 p-4 bg-white rounded border hidden"></div>
+        </div>
+    </div>
+    
+    <script>
+        function testFirebase() {
+            const results = document.getElementById('test-results');
+            results.classList.remove('hidden');
+            results.innerHTML = '<p class="text-blue-600">Testing Firebase connection...</p>';
+            
+            // Try to load Firebase module
+            import('./js/firebase-config.js')
+                .then(() => {
+                    results.innerHTML = '<p class="text-green-600">✓ Firebase configuration loaded successfully!</p>';
+                })
+                .catch(error => {
+                    results.innerHTML = `<p class="text-red-600">✗ Firebase connection failed: ${error.message}</p>`;
+                });
+        }
+        
+        function testNavigation() {
+            const results = document.getElementById('test-results');
+            results.classList.remove('hidden');
+            results.innerHTML = '<p class="text-blue-600">Testing navigation links...</p>';
+            
+            const links = ['index.html', 'login.html', 'signup.html', 'browse.html', 'dashboard.html'];
+            let testResults = [];
+            
+            Promise.all(links.map(link => 
+                fetch(link)
+                    .then(response => ({ link, status: response.status, ok: response.ok }))
+                    .catch(error => ({ link, status: 'error', error: error.message }))
+            )).then(results => {
+                const output = results.map(result => 
+                    `<p class="${result.ok ? 'text-green-600' : 'text-red-600'}">
+                        ${result.ok ? '✓' : '✗'} ${result.link} - ${result.ok ? 'OK' : result.error || result.status}
+                    </p>`
+                ).join('');
+                document.getElementById('test-results').innerHTML = output;
+            });
+        }
+        
+        function testJSModules() {
+            const results = document.getElementById('test-results');
+            results.classList.remove('hidden');
+            results.innerHTML = '<p class="text-blue-600">Testing JS modules...</p>';
+            
+            const modules = [
+                'js/firebase-config.js',
+                'js/auth.js', 
+                'js/browse.js',
+                'js/utils/validators.js'
+            ];
+            
+            Promise.all(modules.map(module => 
+                fetch(module)
+                    .then(response => ({ module, status: response.status, ok: response.ok }))
+                    .catch(error => ({ module, status: 'error', error: error.message }))
+            )).then(moduleResults => {
+                const output = moduleResults.map(result => 
+                    `<p class="${result.ok ? 'text-green-600' : 'text-red-600'}">
+                        ${result.ok ? '✓' : '✗'} ${result.module} - ${result.ok ? 'OK' : result.error || result.status}
+                    </p>`
+                ).join('');
+                document.getElementById('test-results').innerHTML = output;
+            });
+        }
+    </script>
+</body>
+</html>

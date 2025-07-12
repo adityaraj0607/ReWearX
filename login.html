@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In - ReWearX</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac',
+                            400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d',
+                            800: '#166534', 900: '#14532d'
+                        },
+                        'earth-brown': {
+                            50: '#fefdf8', 100: '#fef7cd', 200: '#feea9b', 300: '#fdd662',
+                            400: '#fbbc35', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gradient-to-br from-eco-green-50 to-earth-brown-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-eco-green-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="text-2xl">♻️</div>
+                    <span class="text-xl font-bold text-gradient">ReWearX</span>
+                </a>
+                
+                <div class="flex items-center space-x-4">
+                    <a href="index.html" class="text-gray-600 hover:text-eco-green-600 transition-colors">
+                        <i class="fas fa-home mr-1"></i>Home
+                    </a>
+                    <a href="signup.html" class="btn-primary text-sm py-2 px-4">
+                        Create Account
+                    </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="flex min-h-screen">
+        <!-- Left Side - Image/Info -->
+        <div class="hidden lg:flex lg:w-1/2 bg-gradient-to-br from-eco-green-500 to-earth-brown-500 text-white">
+            <div class="flex flex-col justify-center items-center p-12 text-center">
+                <div class="text-8xl mb-8 animate-pulse-slow">♻️</div>
+                <h2 class="text-4xl font-bold mb-6">Welcome Back!</h2>
+                <p class="text-xl mb-8 opacity-90 max-w-md">
+                    Continue your sustainable fashion journey. Your wardrobe and the planet will thank you.
+                </p>
+                <div class="grid grid-cols-2 gap-6 text-center">
+                    <div>
+                        <div class="text-2xl font-bold">1,247</div>
+                        <div class="text-sm opacity-80">Active Users</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">3,892</div>
+                        <div class="text-sm opacity-80">Items Shared</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">2,156</div>
+                        <div class="text-sm opacity-80">Successful Swaps</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl font-bold">45.6 tons</div>
+                        <div class="text-sm opacity-80">CO₂ Saved</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Sign In Form -->
+        <div class="w-full lg:w-1/2 flex items-center justify-center p-8">
+            <div class="max-w-md w-full">
+                <div class="bg-white rounded-2xl shadow-xl p-8 lg:p-10">
+                    <!-- Header -->
+                    <div class="text-center mb-8">
+                        <h1 class="text-3xl font-bold text-gray-900 mb-2">Sign In</h1>
+                        <p class="text-gray-600">Enter your credentials to access your account</p>
+                    </div>
+
+                    <!-- Sign In Form -->
+                    <form id="signin-form" class="space-y-6">
+                        <!-- Email -->
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                                Email Address
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    required
+                                    class="form-input pl-10"
+                                    placeholder="Enter your email"
+                                >
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-envelope text-gray-400"></i>
+                                </div>
+                            </div>
+                            <div id="email-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Password -->
+                        <div>
+                            <label for="password" class="block text-sm font-medium text-gray-700 mb-2">
+                                Password
+                            </label>
+                            <div class="relative">
+                                <input
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    required
+                                    class="form-input pl-10 pr-10"
+                                    placeholder="Enter your password"
+                                >
+                                <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                    <i class="fas fa-lock text-gray-400"></i>
+                                </div>
+                                <button
+                                    type="button"
+                                    class="absolute inset-y-0 right-0 pr-3 flex items-center"
+                                    onclick="togglePassword()"
+                                >
+                                    <i id="password-toggle-icon" class="fas fa-eye text-gray-400 hover:text-gray-600"></i>
+                                </button>
+                            </div>
+                            <div id="password-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                        </div>
+
+                        <!-- Remember Me & Forgot Password -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center">
+                                <input
+                                    id="remember-me"
+                                    name="remember-me"
+                                    type="checkbox"
+                                    class="h-4 w-4 text-eco-green-600 focus:ring-eco-green-500 border-gray-300 rounded"
+                                >
+                                <label for="remember-me" class="ml-2 block text-sm text-gray-700">
+                                    Remember me
+                                </label>
+                            </div>
+                            <a href="#" class="text-sm text-eco-green-600 hover:text-eco-green-500 font-medium">
+                                Forgot password?
+                            </a>
+                        </div>
+
+                        <!-- Sign In Button -->
+                        <button
+                            type="submit"
+                            class="w-full btn-primary text-center relative"
+                            id="signin-btn"
+                        >
+                            <span id="signin-btn-text">Sign In</span>
+                            <div id="signin-spinner" class="hidden absolute inset-0 items-center justify-center">
+                                <div class="spinner"></div>
+                            </div>
+                        </button>
+                    </form>
+
+                    <!-- Divider -->
+                    <div class="my-6">
+                        <div class="relative">
+                            <div class="absolute inset-0 flex items-center">
+                                <div class="w-full border-t border-gray-300"></div>
+                            </div>
+                            <div class="relative flex justify-center text-sm">
+                                <span class="px-2 bg-white text-gray-500">Or continue with</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Google Sign In -->
+                    <button
+                        type="button"
+                        id="google-signin-btn"
+                        class="w-full bg-white border border-gray-300 rounded-lg px-4 py-3 text-gray-700 font-medium hover:bg-gray-50 focus:outline-none focus:ring-4 focus:ring-gray-200 transition-all duration-200 flex items-center justify-center space-x-3"
+                    >
+                        <svg class="w-5 h-5" viewBox="0 0 24 24">
+                            <path fill="#4285F4" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/>
+                            <path fill="#34A853" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/>
+                            <path fill="#FBBC05" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/>
+                            <path fill="#EA4335" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/>
+                        </svg>
+                        <span>Sign in with Google</span>
+                    </button>
+
+                    <!-- Sign Up Link -->
+                    <div class="mt-8 text-center">
+                        <p class="text-gray-600">
+                            Don't have an account?
+                            <a href="signup.html" class="font-medium text-eco-green-600 hover:text-eco-green-500 transition-colors">
+                                Create one now
+                            </a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Additional Info -->
+                <div class="mt-8 text-center">
+                    <p class="text-sm text-gray-500">
+                        By signing in, you agree to our 
+                        <a href="#" class="text-eco-green-600 hover:underline">Terms of Service</a> 
+                        and 
+                        <a href="#" class="text-eco-green-600 hover:underline">Privacy Policy</a>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/utils/validators.js"></script>
+    <script type="module">
+        import authManager from './js/auth.js';
+        import { Validators, showToast } from './js/utils/validators.js';
+
+        // Setup form validation
+        document.addEventListener('DOMContentLoaded', () => {
+            // Check if already authenticated and redirect
+            authManager.onAuthStateChanged((user) => {
+                if (user) {
+                    // User is signed in, redirect to dashboard
+                    window.location.href = 'dashboard.html';
+                }
+            });
+
+            if (typeof Validators.setupRealTimeValidation === 'function') {
+                Validators.setupRealTimeValidation('signin-form');
+            }
+
+            // Password toggle
+            window.togglePassword = function() {
+                const passwordInput = document.getElementById('password');
+                const toggleIcon = document.getElementById('password-toggle-icon');
+                
+                if (passwordInput.type === 'password') {
+                    passwordInput.type = 'text';
+                    toggleIcon.classList.remove('fa-eye');
+                    toggleIcon.classList.add('fa-eye-slash');
+                } else {
+                    passwordInput.type = 'password';
+                    toggleIcon.classList.remove('fa-eye-slash');
+                    toggleIcon.classList.add('fa-eye');
+                }
+            };
+
+            // Handle form submission
+            const signinForm = document.getElementById('signin-form');
+            if (signinForm) {
+                signinForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    
+                    const email = document.getElementById('email').value;
+                    const password = document.getElementById('password').value;
+                    const signinBtn = document.getElementById('signin-btn');
+                    const signinBtnText = document.getElementById('signin-btn-text');
+                    const signinSpinner = document.getElementById('signin-spinner');
+
+                    // Validate inputs
+                    if (!Validators.validateEmail(email)) {
+                        showToast('Please enter a valid email address', 'error');
+                        return;
+                    }
+
+                    if (!Validators.validatePassword(password).isValid) {
+                        showToast('Password must be at least 6 characters long', 'error');
+                        return;
+                    }
+
+                    // Show loading state
+                    signinBtn.disabled = true;
+                    signinBtnText.classList.add('invisible');
+                    signinSpinner.classList.remove('hidden');
+                    signinSpinner.classList.add('flex');
+
+                    try {
+                        await authManager.signIn(email, password);
+                        // On success, show success message and redirect
+                        showToast('Signed in successfully!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 500);
+                    } catch (error) {
+                        // Error already handled by auth manager
+                    } finally {
+                        // Hide loading state
+                        signinBtn.disabled = false;
+                        signinBtnText.classList.remove('invisible');
+                        signinSpinner.classList.add('hidden');
+                        signinSpinner.classList.remove('flex');
+                    }
+                });
+            }
+
+            // Handle Google Sign In
+            const googleSignInBtn = document.getElementById('google-signin-btn');
+            if (googleSignInBtn) {
+                googleSignInBtn.addEventListener('click', async () => {
+                    try {
+                        await authManager.signInWithGoogle();
+                        // On success, show success message and redirect
+                        showToast('Signed in with Google successfully!', 'success');
+                        setTimeout(() => {
+                            window.location.href = 'dashboard.html';
+                        }, 500);
+                    } catch (error) {
+                        // Error already handled by auth manager
+                    }
+                });
+            }
+
+            // Add loading animation to page
+            document.body.classList.add('fade-in');
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,499 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ReWearX - Community Clothing Exchange</title>
+    <meta name="description" content="Sustainable fashion through community clothing exchange. Swap, redeem, and discover unique clothing items while earning EcoPoints.">
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac',
+                            400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d',
+                            800: '#166534', 900: '#14532d'
+                        },
+                        'earth-brown': {
+                            50: '#fefdf8', 100: '#fef7cd', 200: '#feea9b', 300: '#fdd662',
+                            400: '#fbbc35', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gradient-to-br from-eco-green-50 to-earth-brown-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-eco-green-100 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center space-x-2">
+                    <div class="text-3xl">♻️</div>
+                    <span class="text-2xl font-bold text-gradient">ReWearX</span>
+                </div>
+                
+                <!-- Desktop Navigation -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="#" class="nav-link active">Home</a>
+                    <a href="browse.html" class="nav-link">Browse</a>
+                    <a href="#how-it-works" class="nav-link">How It Works</a>
+                    <a href="#impact" class="nav-link">Impact</a>
+                    <a href="#community" class="nav-link">Community</a>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <div class="auth-button">
+                        <a href="login.html" class="btn-outline text-sm py-2 px-4">Sign In</a>
+                        <a href="signup.html" class="btn-primary text-sm py-2 px-4">Join Now</a>
+                    </div>
+                    
+                    <div class="user-button hidden">
+                        <div class="flex items-center space-x-4">
+                            <a href="dashboard.html" class="text-eco-green-600 hover:text-eco-green-700">
+                                <i class="fas fa-tachometer-alt"></i> Dashboard
+                            </a>
+                            <div class="relative group">
+                                <img src="" alt="User Avatar" class="user-avatar w-8 h-8 rounded-full cursor-pointer">
+                                <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block">
+                                    <span class="user-name block px-4 py-2 text-sm text-gray-700 font-medium"></span>
+                                    <hr class="my-1">
+                                    <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
+                                    <a href="upload.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Upload Item</a>
+                                    <button onclick="signOut()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Sign Out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden text-gray-600 hover:text-eco-green-600" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Mobile Navigation -->
+        <div id="mobile-menu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-4 py-3 space-y-3">
+                <a href="#" class="block nav-link">Home</a>
+                <a href="browse.html" class="block nav-link">Browse</a>
+                <a href="#how-it-works" class="block nav-link">How It Works</a>
+                <a href="#impact" class="block nav-link">Impact</a>
+                <a href="#community" class="block nav-link">Community</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="relative overflow-hidden bg-gradient-to-br from-eco-green-400 via-eco-green-500 to-earth-brown-400 text-white">
+        <div class="absolute inset-0 bg-black/20"></div>
+        <div class="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 lg:py-32">
+            <div class="text-center">
+                <h1 class="text-4xl md:text-6xl font-bold mb-6 leading-tight">
+                    Sustainable Fashion<br>
+                    <span class="text-earth-brown-200">Starts Here</span>
+                </h1>
+                <p class="text-xl md:text-2xl mb-8 max-w-3xl mx-auto leading-relaxed">
+                    Join our community-driven clothing exchange platform. Swap, redeem, and discover unique fashion items while earning EcoPoints and reducing fashion waste.
+                </p>
+                <div class="flex flex-col sm:flex-row gap-4 justify-center items-center">
+                    <a href="signup.html" class="btn-primary text-lg px-8 py-4 transform hover:scale-105">
+                        <i class="fas fa-leaf mr-2"></i>Start Your Journey
+                    </a>
+                    <a href="browse.html" class="btn-outline text-white border-white hover:bg-white hover:text-eco-green-600 text-lg px-8 py-4">
+                        <i class="fas fa-search mr-2"></i>Browse Items
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Floating elements -->
+        <div class="absolute top-20 left-10 text-6xl opacity-20 animate-pulse-slow">👕</div>
+        <div class="absolute top-40 right-20 text-4xl opacity-20 animate-bounce">👗</div>
+        <div class="absolute bottom-20 left-1/4 text-5xl opacity-20 animate-pulse-slow">👟</div>
+        <div class="absolute bottom-40 right-1/3 text-3xl opacity-20 animate-bounce">👜</div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="py-16 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                <div class="space-y-2">
+                    <div class="text-3xl md:text-4xl font-bold text-eco-green-600" id="total-users">1,247</div>
+                    <div class="text-gray-600">Active Users</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-3xl md:text-4xl font-bold text-eco-green-600" id="total-items">3,892</div>
+                    <div class="text-gray-600">Items Shared</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-3xl md:text-4xl font-bold text-eco-green-600" id="total-swaps">2,156</div>
+                    <div class="text-gray-600">Successful Swaps</div>
+                </div>
+                <div class="space-y-2">
+                    <div class="text-3xl md:text-4xl font-bold text-eco-green-600">45,678</div>
+                    <div class="text-gray-600">kg CO₂ Saved</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section id="how-it-works" class="py-20 bg-gradient-to-br from-eco-green-50 to-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">How ReWearX Works</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Simple steps to start your sustainable fashion journey</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center group">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                        <div class="bg-eco-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-upload text-2xl text-eco-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">1. Upload Items</h3>
+                        <p class="text-gray-600">Share your pre-loved clothing items with our community. Upload photos, set conditions, and earn EcoPoints.</p>
+                    </div>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                        <div class="bg-earth-brown-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-exchange-alt text-2xl text-earth-brown-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">2. Swap or Redeem</h3>
+                        <p class="text-gray-600">Browse amazing items and either swap with your clothes or redeem using your earned EcoPoints.</p>
+                    </div>
+                </div>
+                
+                <div class="text-center group">
+                    <div class="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-all duration-300 transform group-hover:scale-105">
+                        <div class="bg-eco-green-100 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                            <i class="fas fa-heart text-2xl text-eco-green-600"></i>
+                        </div>
+                        <h3 class="text-xl font-semibold mb-4">3. Love & Share</h3>
+                        <p class="text-gray-600">Enjoy your new items and continue the cycle of sustainable fashion. Rate and review your experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Categories -->
+    <section class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Popular Categories</h2>
+                <p class="text-xl text-gray-600">Discover what's trending in our community</p>
+            </div>
+            
+            <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+                <a href="browse.html?category=tops" class="group">
+                    <div class="bg-gradient-to-br from-pink-100 to-pink-200 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                        <div class="text-4xl mb-3">👕</div>
+                        <h3 class="font-semibold text-gray-800">Tops</h3>
+                        <p class="text-sm text-gray-600 mt-1">324 items</p>
+                    </div>
+                </a>
+                
+                <a href="browse.html?category=dresses" class="group">
+                    <div class="bg-gradient-to-br from-purple-100 to-purple-200 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                        <div class="text-4xl mb-3">👗</div>
+                        <h3 class="font-semibold text-gray-800">Dresses</h3>
+                        <p class="text-sm text-gray-600 mt-1">187 items</p>
+                    </div>
+                </a>
+                
+                <a href="browse.html?category=shoes" class="group">
+                    <div class="bg-gradient-to-br from-blue-100 to-blue-200 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                        <div class="text-4xl mb-3">👟</div>
+                        <h3 class="font-semibold text-gray-800">Shoes</h3>
+                        <p class="text-sm text-gray-600 mt-1">156 items</p>
+                    </div>
+                </a>
+                
+                <a href="browse.html?category=accessories" class="group">
+                    <div class="bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                        <div class="text-4xl mb-3">👜</div>
+                        <h3 class="font-semibold text-gray-800">Accessories</h3>
+                        <p class="text-sm text-gray-600 mt-1">89 items</p>
+                    </div>
+                </a>
+                
+                <a href="browse.html?category=outerwear" class="group">
+                    <div class="bg-gradient-to-br from-green-100 to-green-200 rounded-xl p-6 text-center hover:shadow-lg transition-all duration-300 transform group-hover:scale-105">
+                        <div class="text-4xl mb-3">🧥</div>
+                        <h3 class="font-semibold text-gray-800">Outerwear</h3>
+                        <p class="text-sm text-gray-600 mt-1">92 items</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Impact Section -->
+    <section id="impact" class="py-20 bg-gradient-to-br from-eco-green-900 via-eco-green-800 to-earth-brown-800 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold mb-4">Environmental Impact</h2>
+                <p class="text-xl opacity-90 max-w-3xl mx-auto">Together, we're making a real difference for our planet</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 gap-12 items-center">
+                <div class="space-y-8">
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-eco-green-400 w-12 h-12 rounded-full flex items-center justify-center">
+                            <i class="fas fa-recycle text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Waste Reduction</h3>
+                            <p class="opacity-80">Every item swapped prevents textile waste from reaching landfills</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-earth-brown-400 w-12 h-12 rounded-full flex items-center justify-center">
+                            <i class="fas fa-leaf text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Carbon Footprint</h3>
+                            <p class="opacity-80">Reduced production demand means lower CO₂ emissions</p>
+                        </div>
+                    </div>
+                    
+                    <div class="flex items-center space-x-4">
+                        <div class="bg-eco-green-400 w-12 h-12 rounded-full flex items-center justify-center">
+                            <i class="fas fa-water text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-semibold">Water Conservation</h3>
+                            <p class="opacity-80">Each swap saves thousands of liters of water used in textile production</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="bg-white/10 backdrop-blur-sm rounded-2xl p-8">
+                    <h3 class="text-2xl font-bold mb-6 text-center">This Month's Impact</h3>
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="opacity-90">Items Rescued</span>
+                            <span class="text-2xl font-bold text-eco-green-300">1,234</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="opacity-90">Water Saved</span>
+                            <span class="text-2xl font-bold text-blue-300">2.4M liters</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="opacity-90">CO₂ Prevented</span>
+                            <span class="text-2xl font-bold text-green-300">8.7 tons</span>
+                        </div>
+                        <div class="flex justify-between items-center">
+                            <span class="opacity-90">Trees Equivalent</span>
+                            <span class="text-2xl font-bold text-green-400">192 trees</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section id="community" class="py-20 bg-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center mb-16">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Join Our Community</h2>
+                <p class="text-xl text-gray-600 max-w-3xl mx-auto">Connect with like-minded fashion enthusiasts who care about sustainability</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-8">
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-eco-green-50 to-eco-green-100 rounded-2xl p-8 mb-6">
+                        <div class="text-6xl mb-4">🌟</div>
+                        <h3 class="text-xl font-semibold mb-2">Top Contributor</h3>
+                        <p class="text-gray-600">Sarah M. has shared 47 items this month!</p>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-earth-brown-50 to-earth-brown-100 rounded-2xl p-8 mb-6">
+                        <div class="text-6xl mb-4">💚</div>
+                        <h3 class="text-xl font-semibold mb-2">Eco Champion</h3>
+                        <p class="text-gray-600">Mark L. has saved 12.3 kg of CO₂ this week!</p>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="bg-gradient-to-br from-purple-50 to-purple-100 rounded-2xl p-8 mb-6">
+                        <div class="text-6xl mb-4">👥</div>
+                        <h3 class="text-xl font-semibold mb-2">Community Growth</h3>
+                        <p class="text-gray-600">156 new members joined this week!</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-12">
+                <a href="signup.html" class="btn-primary text-lg px-8 py-4">
+                    <i class="fas fa-users mr-2"></i>Join the Movement
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-20 bg-gradient-to-r from-eco-green-500 to-earth-brown-500 text-white">
+        <div class="max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+            <h2 class="text-3xl md:text-4xl font-bold mb-6">Ready to Transform Your Wardrobe?</h2>
+            <p class="text-xl mb-8 opacity-90">Join thousands of fashion-forward individuals creating a more sustainable future</p>
+            <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                <a href="signup.html" class="bg-white text-eco-green-600 hover:bg-gray-100 font-semibold py-4 px-8 rounded-lg transition-colors duration-300 transform hover:scale-105">
+                    Get Started Free
+                </a>
+                <a href="browse.html" class="border-2 border-white text-white hover:bg-white hover:text-eco-green-600 font-semibold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-105">
+                    Browse Collection
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid md:grid-cols-4 gap-8">
+                <div class="space-y-4">
+                    <div class="flex items-center space-x-2">
+                        <div class="text-2xl">♻️</div>
+                        <span class="text-xl font-bold">ReWearX</span>
+                    </div>
+                    <p class="text-gray-400">Sustainable fashion through community-driven clothing exchange.</p>
+                    <div class="flex space-x-4">
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-facebook-f"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-twitter"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-instagram"></i>
+                        </a>
+                        <a href="#" class="text-gray-400 hover:text-white transition-colors">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Platform</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="browse.html" class="hover:text-white transition-colors">Browse Items</a></li>
+                        <li><a href="upload.html" class="hover:text-white transition-colors">Upload Item</a></li>
+                        <li><a href="dashboard.html" class="hover:text-white transition-colors">Dashboard</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Mobile App</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Community</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Blog</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Events</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Forum</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Newsletter</a></li>
+                    </ul>
+                </div>
+                
+                <div>
+                    <h4 class="font-semibold mb-4">Support</h4>
+                    <ul class="space-y-2 text-gray-400">
+                        <li><a href="#" class="hover:text-white transition-colors">Help Center</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Contact Us</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Privacy Policy</a></li>
+                        <li><a href="#" class="hover:text-white transition-colors">Terms of Service</a></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="border-t border-gray-800 mt-12 pt-8 text-center text-gray-400">
+                <p>&copy; 2025 ReWearX. Made with 💚 for a sustainable future. Odoo Hackathon 2025 Entry.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script type="module" src="js/auth.js"></script>
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        // Animate statistics on scroll
+        function animateStats() {
+            const stats = document.querySelectorAll('#total-users, #total-items, #total-swaps');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const target = parseInt(entry.target.textContent.replace(/,/g, ''));
+                        animateNumber(entry.target, 0, target, 2000);
+                        observer.unobserve(entry.target);
+                    }
+                });
+            });
+
+            stats.forEach(stat => observer.observe(stat));
+        }
+
+        function animateNumber(element, start, end, duration) {
+            const startTime = performance.now();
+            const update = (currentTime) => {
+                const elapsed = currentTime - startTime;
+                const progress = Math.min(elapsed / duration, 1);
+                const current = Math.floor(start + (end - start) * progress);
+                element.textContent = current.toLocaleString();
+                
+                if (progress < 1) {
+                    requestAnimationFrame(update);
+                }
+            };
+            requestAnimationFrame(update);
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Initialize animations
+        document.addEventListener('DOMContentLoaded', () => {
+            animateStats();
+        });
+    </script>
+</body>
+</html>

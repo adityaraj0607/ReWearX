@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Item - ReWearX</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac',
+                            400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d',
+                            800: '#166534', 900: '#14532d'
+                        },
+                        'earth-brown': {
+                            50: '#fefdf8', 100: '#fef7cd', 200: '#feea9b', 300: '#fdd662',
+                            400: '#fbbc35', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gradient-to-br from-eco-green-50 to-earth-brown-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-eco-green-100 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="text-2xl">♻️</div>
+                    <span class="text-xl font-bold text-gradient">ReWearX</span>
+                </a>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="browse.html" class="nav-link">Browse</a>
+                    <a href="dashboard.html" class="nav-link">Dashboard</a>
+                    <a href="upload.html" class="nav-link active">Upload</a>
+                </div>
+                
+                <!-- User Menu -->
+                <div class="flex items-center space-x-4">
+                    <div class="user-button">
+                        <div class="flex items-center space-x-4">
+                            <a href="dashboard.html" class="text-eco-green-600 hover:text-eco-green-700">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </a>
+                            <div class="relative group">
+                                <img src="" alt="User Avatar" class="user-avatar w-8 h-8 rounded-full cursor-pointer">
+                                <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block">
+                                    <span class="user-name block px-4 py-2 text-sm text-gray-700 font-medium"></span>
+                                    <hr class="my-1">
+                                    <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
+                                    <a href="browse.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Browse Items</a>
+                                    <button onclick="signOut()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Sign Out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex py-3 text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-eco-green-600">Home</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <a href="dashboard.html" class="text-gray-500 hover:text-eco-green-600">Dashboard</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-900 font-medium">Upload Item</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Share Your Style</h1>
+            <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                Upload your pre-loved clothing items and help build a more sustainable fashion community. 
+                Earn EcoPoints for every item you share!
+            </p>
+        </div>
+
+        <!-- Upload Form -->
+        <div class="bg-white rounded-2xl shadow-xl overflow-hidden">
+            <form id="upload-form" class="space-y-8 p-8">
+                <!-- Image Upload Section -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        <i class="fas fa-camera text-eco-green-600 mr-2"></i>
+                        Photos (Required)
+                    </h3>
+                    <p class="text-sm text-gray-600">Upload up to 5 high-quality photos. The first photo will be the main image.</p>
+                    
+                    <!-- Drop Zone -->
+                    <div id="drop-zone" class="drop-zone cursor-pointer">
+                        <div class="text-center">
+                            <i class="fas fa-cloud-upload-alt text-4xl text-gray-400 mb-4"></i>
+                            <p class="text-lg font-medium text-gray-700 mb-2">Drag & drop your images here</p>
+                            <p class="text-sm text-gray-500 mb-4">or click to browse files</p>
+                            <button type="button" class="btn-primary">
+                                <i class="fas fa-plus mr-2"></i>Select Photos
+                            </button>
+                            <p class="text-xs text-gray-400 mt-2">Supports: JPG, PNG, WEBP • Max size: 2MB each</p>
+                        </div>
+                    </div>
+
+                    <!-- Hidden File Input -->
+                    <input
+                        type="file"
+                        id="file-input"
+                        accept="image/*"
+                        multiple
+                        class="hidden"
+                    >
+
+                    <!-- Image Preview -->
+                    <div id="image-preview" class="flex flex-wrap gap-4">
+                        <!-- Previews will appear here -->
+                    </div>
+                </div>
+
+                <!-- Item Details -->
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <!-- Title -->
+                    <div class="md:col-span-2">
+                        <label for="title" class="block text-sm font-medium text-gray-700 mb-2">
+                            Item Title *
+                        </label>
+                        <input
+                            type="text"
+                            id="title"
+                            name="title"
+                            required
+                            maxlength="100"
+                            class="form-input"
+                            placeholder="e.g., Vintage Denim Jacket"
+                        >
+                        <div id="title-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                        <p class="text-xs text-gray-500 mt-1">Be descriptive but concise (3-100 characters)</p>
+                    </div>
+
+                    <!-- Category -->
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-700 mb-2">
+                            Category *
+                        </label>
+                        <select id="category" name="category" required class="form-input">
+                            <option value="">Select Category</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <div id="category-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Type -->
+                    <div>
+                        <label for="type" class="block text-sm font-medium text-gray-700 mb-2">
+                            Type *
+                        </label>
+                        <select id="type" name="type" required class="form-input">
+                            <option value="">Select Type</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <div id="type-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Size -->
+                    <div>
+                        <label for="size" class="block text-sm font-medium text-gray-700 mb-2">
+                            Size *
+                        </label>
+                        <select id="size" name="size" required class="form-input">
+                            <option value="">Select Size</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <div id="size-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+
+                    <!-- Condition -->
+                    <div>
+                        <label for="condition" class="block text-sm font-medium text-gray-700 mb-2">
+                            Condition *
+                        </label>
+                        <select id="condition" name="condition" required class="form-input">
+                            <option value="">Select Condition</option>
+                            <!-- Options will be populated by JavaScript -->
+                        </select>
+                        <div id="condition-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    </div>
+                </div>
+
+                <!-- Description -->
+                <div>
+                    <label for="description" class="block text-sm font-medium text-gray-700 mb-2">
+                        Description *
+                    </label>
+                    <textarea
+                        id="description"
+                        name="description"
+                        required
+                        rows="4"
+                        maxlength="1000"
+                        class="form-input"
+                        placeholder="Describe the item, its condition, fit, styling tips, or any other relevant details..."
+                    ></textarea>
+                    <div id="description-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    <p class="text-xs text-gray-500 mt-1">Be detailed and honest (10-1000 characters)</p>
+                </div>
+
+                <!-- Tags -->
+                <div>
+                    <label for="tags" class="block text-sm font-medium text-gray-700 mb-2">
+                        Tags
+                    </label>
+                    <input
+                        type="text"
+                        id="tags"
+                        name="tags"
+                        class="form-input"
+                        placeholder="vintage, summer, casual, designer (comma-separated)"
+                    >
+                    <p class="text-xs text-gray-500 mt-1">
+                        Add relevant tags to help others find your item. We'll suggest some based on your title and description.
+                    </p>
+                </div>
+
+                <!-- Points Value -->
+                <div>
+                    <label for="pointsValue" class="block text-sm font-medium text-gray-700 mb-2">
+                        EcoPoints Value *
+                    </label>
+                    <div class="relative">
+                        <input
+                            type="number"
+                            id="pointsValue"
+                            name="pointsValue"
+                            required
+                            min="1"
+                            max="1000"
+                            class="form-input pr-16"
+                            placeholder="50"
+                        >
+                        <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none">
+                            <span class="text-gray-500 text-sm">points</span>
+                        </div>
+                    </div>
+                    <div id="pointsValue-error" class="text-red-500 text-sm mt-1 hidden"></div>
+                    <p class="text-xs text-gray-500 mt-1">
+                        Set a fair points value (1-1000). Consider the item's condition, brand, and retail value.
+                    </p>
+                </div>
+
+                <!-- Exchange Options -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        <i class="fas fa-exchange-alt text-eco-green-600 mr-2"></i>
+                        Exchange Options
+                    </h3>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                        <!-- Allow Swapping -->
+                        <div class="flex items-start space-x-3">
+                            <div class="flex items-center h-5">
+                                <input
+                                    id="allowSwap"
+                                    name="allowSwap"
+                                    type="checkbox"
+                                    checked
+                                    class="h-4 w-4 text-eco-green-600 focus:ring-eco-green-500 border-gray-300 rounded"
+                                >
+                            </div>
+                            <div class="text-sm">
+                                <label for="allowSwap" class="font-medium text-gray-700">
+                                    Allow Item Swaps
+                                </label>
+                                <p class="text-gray-500">Others can offer their items in exchange for yours</p>
+                            </div>
+                        </div>
+
+                        <!-- Allow Points Redemption -->
+                        <div class="flex items-start space-x-3">
+                            <div class="flex items-center h-5">
+                                <input
+                                    id="allowRedeem"
+                                    name="allowRedeem"
+                                    type="checkbox"
+                                    checked
+                                    class="h-4 w-4 text-eco-green-600 focus:ring-eco-green-500 border-gray-300 rounded"
+                                >
+                            </div>
+                            <div class="text-sm">
+                                <label for="allowRedeem" class="font-medium text-gray-700">
+                                    Allow Points Redemption
+                                </label>
+                                <p class="text-gray-500">Others can use their EcoPoints to get your item</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Terms Agreement -->
+                <div class="bg-gray-50 rounded-lg p-4">
+                    <div class="flex items-start space-x-3">
+                        <div class="flex items-center h-5 mt-1">
+                            <input
+                                id="terms-agreement"
+                                type="checkbox"
+                                required
+                                class="h-4 w-4 text-eco-green-600 focus:ring-eco-green-500 border-gray-300 rounded"
+                            >
+                        </div>
+                        <div class="text-sm">
+                            <label for="terms-agreement" class="font-medium text-gray-700">
+                                I agree to the terms and conditions *
+                            </label>
+                            <p class="text-gray-500 mt-1">
+                                By uploading this item, I confirm that I own it, it's in the described condition, 
+                                and I agree to ReWearX's 
+                                <a href="#" class="text-eco-green-600 hover:underline">Terms of Service</a> and 
+                                <a href="#" class="text-eco-green-600 hover:underline">Community Guidelines</a>.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Submit Button -->
+                <div class="flex flex-col sm:flex-row gap-4 pt-6">
+                    <button
+                        type="submit"
+                        class="flex-1 btn-primary text-center relative"
+                        id="upload-btn"
+                    >
+                        <span id="upload-btn-text">
+                            <i class="fas fa-upload mr-2"></i>Upload Item
+                        </span>
+                        <div id="upload-spinner" class="hidden absolute inset-0 flex items-center justify-center">
+                            <div class="spinner"></div>
+                        </div>
+                    </button>
+                    
+                    <button
+                        type="button"
+                        onclick="saveDraft()"
+                        class="flex-1 btn-outline"
+                    >
+                        <i class="fas fa-save mr-2"></i>Save as Draft
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Upload Tips -->
+        <div class="mt-8 bg-gradient-to-r from-eco-green-100 to-earth-brown-100 rounded-xl p-6">
+            <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <i class="fas fa-lightbulb text-earth-brown-600 mr-2"></i>
+                Tips for Better Uploads
+            </h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-camera text-eco-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-medium text-gray-800">High-Quality Photos</h4>
+                            <p class="text-sm text-gray-600">Use good lighting and show the item from multiple angles</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-info-circle text-eco-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Honest Descriptions</h4>
+                            <p class="text-sm text-gray-600">Be transparent about condition and any flaws</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-tags text-eco-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Relevant Tags</h4>
+                            <p class="text-sm text-gray-600">Add tags that help others discover your items</p>
+                        </div>
+                    </div>
+                    <div class="flex items-start space-x-3">
+                        <i class="fas fa-balance-scale text-eco-green-600 mt-1"></i>
+                        <div>
+                            <h4 class="font-medium text-gray-800">Fair Pricing</h4>
+                            <p class="text-sm text-gray-600">Set reasonable points based on condition and value</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/upload.js"></script>
+    <script>
+        function saveDraft() {
+            // Save form data to localStorage for later
+            const formData = new FormData(document.getElementById('upload-form'));
+            const draftData = {};
+            
+            for (let [key, value] of formData.entries()) {
+                draftData[key] = value;
+            }
+            
+            localStorage.setItem('upload-draft', JSON.stringify(draftData));
+            
+            // Show confirmation
+            const toastEvent = new CustomEvent('showToast', {
+                detail: { message: 'Draft saved successfully!', type: 'success' }
+            });
+            document.dispatchEvent(toastEvent);
+        }
+
+        // Load draft data on page load
+        document.addEventListener('DOMContentLoaded', () => {
+            const draftData = localStorage.getItem('upload-draft');
+            if (draftData) {
+                try {
+                    const data = JSON.parse(draftData);
+                    Object.entries(data).forEach(([key, value]) => {
+                        const element = document.getElementById(key);
+                        if (element) {
+                            if (element.type === 'checkbox') {
+                                element.checked = value === 'on';
+                            } else {
+                                element.value = value;
+                            }
+                        }
+                    });
+                } catch (error) {
+                    console.error('Error loading draft:', error);
+                }
+            }
+        });
+
+        // Clear draft after successful upload
+        window.addEventListener('upload-success', () => {
+            localStorage.removeItem('upload-draft');
+        });
+    </script>
+</body>
+</html>

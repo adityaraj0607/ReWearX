@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - ReWearX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b border-emerald-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-emerald-600">ReWearX</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="browse.html" class="text-gray-700 hover:text-emerald-600 transition">Browse</a>
+                    <a href="upload.html" class="text-gray-700 hover:text-emerald-600 transition">Upload</a>
+                    <a href="dashboard.html" class="text-emerald-600 font-medium">Dashboard</a>
+                    <div class="relative">
+                        <button id="profileDropdown" class="flex items-center space-x-2 text-gray-700 hover:text-emerald-600">
+                            <div id="userAvatar" class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i data-feather="user" class="w-4 h-4"></i>
+                            </div>
+                            <span id="userName">User</span>
+                        </button>
+                        <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border">
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li><a href="index.html" class="text-gray-500 hover:text-emerald-600">Home</a></li>
+                <li><span class="text-gray-400">/</span></li>
+                <li><span class="text-emerald-600 font-medium">Dashboard</span></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <!-- Welcome Section -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-2">Welcome back, <span id="welcomeUserName">User</span>!</h1>
+            <p class="text-gray-600">Track your sustainability impact and manage your clothing exchanges.</p>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Green Points</p>
+                        <p id="totalPoints" class="text-3xl font-bold text-emerald-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-emerald-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="star" class="w-6 h-6 text-emerald-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-green-600">
+                        <i data-feather="trending-up" class="w-4 h-4 mr-1"></i>
+                        <span id="pointsGrowth">+0</span> this month
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Items Shared</p>
+                        <p id="itemsShared" class="text-3xl font-bold text-blue-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="upload" class="w-6 h-6 text-blue-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-blue-600">
+                        <i data-feather="plus" class="w-4 h-4 mr-1"></i>
+                        <span id="newItemsThisMonth">0</span> this month
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">CO₂ Saved</p>
+                        <p id="co2Saved" class="text-3xl font-bold text-purple-600">0kg</p>
+                    </div>
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="globe" class="w-6 h-6 text-purple-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-purple-600">
+                        <i data-feather="leaf" class="w-4 h-4 mr-1"></i>
+                        Environmental impact
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm p-6 border border-emerald-100">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p class="text-sm font-medium text-gray-600">Exchanges Made</p>
+                        <p id="exchangesMade" class="text-3xl font-bold text-orange-600">0</p>
+                    </div>
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center">
+                        <i data-feather="refresh-cw" class="w-6 h-6 text-orange-600"></i>
+                    </div>
+                </div>
+                <div class="mt-4">
+                    <div class="flex items-center text-sm text-orange-600">
+                        <i data-feather="heart" class="w-4 h-4 mr-1"></i>
+                        Community impact
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- My Items -->
+            <div class="lg:col-span-2">
+                <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                    <div class="p-6 border-b border-gray-200">
+                        <div class="flex items-center justify-between">
+                            <h2 class="text-xl font-semibold text-gray-900">My Items</h2>
+                            <div class="flex space-x-2">
+                                <button id="filterAll" class="px-3 py-1 text-sm bg-emerald-100 text-emerald-700 rounded-full font-medium">All</button>
+                                <button id="filterAvailable" class="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-full">Available</button>
+                                <button id="filterExchanged" class="px-3 py-1 text-sm text-gray-600 hover:bg-gray-100 rounded-full">Exchanged</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="p-6">
+                        <div id="myItemsContainer" class="space-y-4">
+                            <!-- Items will be loaded here -->
+                            <div id="loadingItems" class="flex justify-center py-8">
+                                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                            </div>
+                        </div>
+                        <div id="noItemsMessage" class="hidden text-center py-8">
+                            <i data-feather="package" class="w-12 h-12 text-gray-400 mx-auto mb-4"></i>
+                            <p class="text-gray-500 mb-4">You haven't uploaded any items yet.</p>
+                            <a href="upload.html" class="inline-flex items-center px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                                <i data-feather="plus" class="w-4 h-4 mr-2"></i>
+                                Upload Your First Item
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sidebar -->
+            <div class="space-y-6">
+                <!-- Swap Requests -->
+                <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Swap Requests</h3>
+                    </div>
+                    <div class="p-6">
+                        <div id="swapRequestsContainer" class="space-y-4">
+                            <!-- Requests will be loaded here -->
+                            <div id="loadingRequests" class="flex justify-center py-4">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-600"></div>
+                            </div>
+                        </div>
+                        <div id="noRequestsMessage" class="hidden text-center py-4">
+                            <i data-feather="inbox" class="w-8 h-8 text-gray-400 mx-auto mb-2"></i>
+                            <p class="text-sm text-gray-500">No pending requests</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Leaderboard -->
+                <div class="bg-white rounded-xl shadow-sm border border-emerald-100">
+                    <div class="p-6 border-b border-gray-200">
+                        <h3 class="text-lg font-semibold text-gray-900">Community Leaders</h3>
+                    </div>
+                    <div class="p-6">
+                        <div id="leaderboardContainer" class="space-y-3">
+                            <!-- Leaderboard will be loaded here -->
+                            <div id="loadingLeaderboard" class="flex justify-center py-4">
+                                <div class="animate-spin rounded-full h-6 w-6 border-b-2 border-emerald-600"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Achievement Badge -->
+                <div class="bg-gradient-to-r from-emerald-500 to-teal-600 rounded-xl p-6 text-white">
+                    <div class="flex items-center mb-4">
+                        <div class="w-10 h-10 bg-white bg-opacity-20 rounded-lg flex items-center justify-center mr-3">
+                            <i data-feather="award" class="w-6 h-6"></i>
+                        </div>
+                        <div>
+                            <h3 class="font-semibold">Eco Warrior</h3>
+                            <p class="text-emerald-100 text-sm">Level <span id="userLevel">1</span></p>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <div class="flex justify-between text-sm mb-1">
+                            <span>Progress to next level</span>
+                            <span id="levelProgress">0/100</span>
+                        </div>
+                        <div class="w-full bg-white bg-opacity-20 rounded-full h-2">
+                            <div id="levelProgressBar" class="bg-white h-2 rounded-full" style="width: 0%"></div>
+                        </div>
+                    </div>
+                    <p class="text-emerald-100 text-sm">Keep sharing to unlock new badges!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swap Request Modal -->
+    <div id="swapRequestModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-md w-full p-6">
+            <div class="flex items-center justify-between mb-4">
+                <h3 class="text-lg font-semibold">Swap Request</h3>
+                <button id="closeModal" class="text-gray-400 hover:text-gray-600">
+                    <i data-feather="x" class="w-6 h-6"></i>
+                </button>
+            </div>
+            <div id="modalContent">
+                <!-- Modal content will be populated here -->
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/dashboard.js"></script>
+    <script>feather.replace()</script>
+</body>
+</html>

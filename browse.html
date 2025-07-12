@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Browse Items - ReWearX</title>
+    <link rel="icon" type="image/x-icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>♻️</text></svg>">
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'eco-green': {
+                            50: '#f0fdf4', 100: '#dcfce7', 200: '#bbf7d0', 300: '#86efac',
+                            400: '#4ade80', 500: '#22c55e', 600: '#16a34a', 700: '#15803d',
+                            800: '#166534', 900: '#14532d'
+                        },
+                        'earth-brown': {
+                            50: '#fefdf8', 100: '#fef7cd', 200: '#feea9b', 300: '#fdd662',
+                            400: '#fbbc35', 500: '#f59e0b', 600: '#d97706', 700: '#b45309',
+                            800: '#92400e', 900: '#78350f'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Custom Styles -->
+    <link rel="stylesheet" href="css/styles.css">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body class="font-sans bg-gradient-to-br from-eco-green-50 to-earth-brown-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white/90 backdrop-blur-md border-b border-eco-green-100 sticky top-0 z-40">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <a href="index.html" class="flex items-center space-x-2">
+                    <div class="text-2xl">♻️</div>
+                    <span class="text-xl font-bold text-gradient">ReWearX</span>
+                </a>
+                
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="nav-link">Home</a>
+                    <a href="browse.html" class="nav-link active">Browse</a>
+                    <a href="dashboard.html" class="nav-link protected">Dashboard</a>
+                    <a href="upload.html" class="nav-link protected">Upload</a>
+                </div>
+                
+                <!-- Auth Buttons -->
+                <div class="flex items-center space-x-4">
+                    <div class="auth-button">
+                        <a href="login.html" class="btn-outline text-sm py-2 px-4">Sign In</a>
+                        <a href="signup.html" class="btn-primary text-sm py-2 px-4">Join Now</a>
+                    </div>
+                    
+                    <div class="user-button hidden">
+                        <div class="flex items-center space-x-4">
+                            <a href="dashboard.html" class="text-eco-green-600 hover:text-eco-green-700">
+                                <i class="fas fa-tachometer-alt"></i>
+                            </a>
+                            <div class="relative group">
+                                <img src="" alt="User Avatar" class="user-avatar w-8 h-8 rounded-full cursor-pointer">
+                                <div class="absolute right-0 mt-2 w-48 bg-white rounded-lg shadow-lg py-2 hidden group-hover:block">
+                                    <span class="user-name block px-4 py-2 text-sm text-gray-700 font-medium"></span>
+                                    <hr class="my-1">
+                                    <a href="dashboard.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Dashboard</a>
+                                    <a href="upload.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Upload Item</a>
+                                    <button onclick="signOut()" class="block w-full text-left px-4 py-2 text-sm text-gray-700 hover:bg-gray-50">Sign Out</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Mobile menu button -->
+                    <button class="md:hidden text-gray-600 hover:text-eco-green-600" onclick="toggleMobileMenu()">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="bg-white border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <nav class="flex py-3 text-sm">
+                <a href="index.html" class="text-gray-500 hover:text-eco-green-600">Home</a>
+                <span class="mx-2 text-gray-400">/</span>
+                <span class="text-gray-900 font-medium">Browse Items</span>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- Page Header -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-900 mb-4">Browse Sustainable Fashion</h1>
+            <p class="text-lg text-gray-600">Discover amazing pre-loved clothing items from our community</p>
+        </div>
+
+        <!-- Search and Filters Section -->
+        <div class="search-section mb-8">
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- Search Bar -->
+                <div class="lg:col-span-2">
+                    <label for="search-input" class="block text-sm font-medium text-gray-700 mb-2">
+                        Search Items
+                    </label>
+                    <div class="flex">
+                        <div class="relative flex-grow">
+                            <input
+                                type="text"
+                                id="search-input"
+                                placeholder="Search by title, description, or tags..."
+                                class="form-input pl-10 w-full rounded-r-none"
+                            >
+                            <div class="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+                                <i class="fas fa-search text-gray-400"></i>
+                            </div>
+                        </div>
+                        <button 
+                            id="external-search-btn" 
+                            class="btn-primary rounded-l-none px-3 py-2 whitespace-nowrap"
+                            title="Search on external sites if not found in our catalog"
+                        >
+                            <i class="fas fa-globe mr-1"></i> External Search
+                        </button>
+                    </div>
+                    <p class="mt-1 text-xs text-gray-500">Can't find what you're looking for? Try external search!</p>
+                </div>
+
+                <!-- Category Filter -->
+                <div>
+                    <label for="category-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Category
+                    </label>
+                    <select id="category-filter" class="form-input">
+                        <option value="">All Categories</option>
+                        <option value="tops">Tops</option>
+                        <option value="bottoms">Bottoms</option>
+                        <option value="dresses">Dresses</option>
+                        <option value="outerwear">Outerwear</option>
+                        <option value="shoes">Shoes</option>
+                        <option value="accessories">Accessories</option>
+                        <option value="bags">Bags</option>
+                        <option value="jewelry">Jewelry</option>
+                        <option value="activewear">Activewear</option>
+                        <option value="formal">Formal Wear</option>
+                    </select>
+                </div>
+
+                <!-- Sort Filter -->
+                <div>
+                    <label for="sort-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Sort By
+                    </label>
+                    <select id="sort-filter" class="form-input">
+                        <option value="newest">Newest First</option>
+                        <option value="oldest">Oldest First</option>
+                        <option value="price-low">Points: Low to High</option>
+                        <option value="price-high">Points: High to Low</option>
+                        <option value="popular">Most Popular</option>
+                    </select>
+                </div>
+            </div>
+
+            <!-- Advanced Filters Row -->
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mt-6">
+                <!-- Type Filter -->
+                <div>
+                    <label for="type-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Type
+                    </label>
+                    <select id="type-filter" class="form-input">
+                        <option value="">All Types</option>
+                        <option value="mens">Men's</option>
+                        <option value="womens">Women's</option>
+                        <option value="unisex">Unisex</option>
+                        <option value="kids">Kids</option>
+                    </select>
+                </div>
+
+                <!-- Size Filter -->
+                <div>
+                    <label for="size-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Size
+                    </label>
+                    <select id="size-filter" class="form-input">
+                        <option value="">All Sizes</option>
+                        <option value="xs">XS</option>
+                        <option value="s">S</option>
+                        <option value="m">M</option>
+                        <option value="l">L</option>
+                        <option value="xl">XL</option>
+                        <option value="xxl">XXL</option>
+                        <option value="one-size">One Size</option>
+                    </select>
+                </div>
+
+                <!-- Condition Filter -->
+                <div>
+                    <label for="condition-filter" class="block text-sm font-medium text-gray-700 mb-2">
+                        Condition
+                    </label>
+                    <select id="condition-filter" class="form-input">
+                        <option value="">All Conditions</option>
+                        <option value="excellent">Excellent</option>
+                        <option value="good">Good</option>
+                        <option value="fair">Fair</option>
+                        <option value="poor">Poor</option>
+                    </select>
+                </div>
+
+                <!-- Clear Filters -->
+                <div class="flex items-end">
+                    <button
+                        id="clear-filters"
+                        class="btn-outline w-full"
+                    >
+                        <i class="fas fa-times mr-2"></i>Clear Filters
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-6">
+            <div>
+                <p id="results-count" class="text-gray-600">Loading items...</p>
+            </div>
+            
+            <div class="flex items-center space-x-4 mt-4 sm:mt-0">
+                <!-- View Toggle -->
+                <div class="flex items-center bg-gray-100 rounded-lg p-1">
+                    <button class="view-toggle active px-3 py-1 rounded text-sm font-medium bg-white shadow-sm" data-view="grid">
+                        <i class="fas fa-th-large"></i>
+                    </button>
+                    <button class="view-toggle px-3 py-1 rounded text-sm font-medium" data-view="list">
+                        <i class="fas fa-list"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Items Grid -->
+        <div id="items-container" class="item-grid">
+            <!-- Items will be loaded here -->
+        </div>
+
+        <!-- Pagination -->
+        <div id="pagination" class="pagination">
+            <!-- Pagination will be generated here -->
+        </div>
+
+        <!-- Quick Filters (Popular Categories) -->
+        <div class="mt-12 bg-white rounded-xl shadow-lg p-8">
+            <h3 class="text-xl font-semibold text-gray-900 mb-6">Popular Categories</h3>
+            <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+                <button 
+                    onclick="setQuickFilter('category', 'tops')"
+                    class="quick-filter-btn p-4 rounded-lg border border-gray-200 hover:border-eco-green-500 hover:bg-eco-green-50 transition-all duration-200 text-center"
+                >
+                    <div class="text-2xl mb-2">👕</div>
+                    <div class="text-sm font-medium">Tops</div>
+                </button>
+                
+                <button 
+                    onclick="setQuickFilter('category', 'dresses')"
+                    class="quick-filter-btn p-4 rounded-lg border border-gray-200 hover:border-eco-green-500 hover:bg-eco-green-50 transition-all duration-200 text-center"
+                >
+                    <div class="text-2xl mb-2">👗</div>
+                    <div class="text-sm font-medium">Dresses</div>
+                </button>
+                
+                <button 
+                    onclick="setQuickFilter('category', 'shoes')"
+                    class="quick-filter-btn p-4 rounded-lg border border-gray-200 hover:border-eco-green-500 hover:bg-eco-green-50 transition-all duration-200 text-center"
+                >
+                    <div class="text-2xl mb-2">👟</div>
+                    <div class="text-sm font-medium">Shoes</div>
+                </button>
+                
+                <button 
+                    onclick="setQuickFilter('category', 'accessories')"
+                    class="quick-filter-btn p-4 rounded-lg border border-gray-200 hover:border-eco-green-500 hover:bg-eco-green-50 transition-all duration-200 text-center"
+                >
+                    <div class="text-2xl mb-2">👜</div>
+                    <div class="text-sm font-medium">Accessories</div>
+                </button>
+                
+                <button 
+                    onclick="setQuickFilter('category', 'outerwear')"
+                    class="quick-filter-btn p-4 rounded-lg border border-gray-200 hover:border-eco-green-500 hover:bg-eco-green-50 transition-all duration-200 text-center"
+                >
+                    <div class="text-2xl mb-2">🧥</div>
+                    <div class="text-sm font-medium">Outerwear</div>
+                </button>
+            </div>
+        </div>
+
+        <!-- CTA Section -->
+        <div class="mt-12 bg-gradient-to-r from-eco-green-500 to-earth-brown-500 rounded-xl text-white p-8 text-center">
+            <h3 class="text-2xl font-bold mb-4">Can't Find What You're Looking For?</h3>
+            <p class="text-lg mb-6 opacity-90">Upload your own items and start trading with our community!</p>
+            <a href="upload.html" class="btn-secondary">
+                <i class="fas fa-upload mr-2"></i>Upload Your Items
+            </a>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script type="module" src="js/auth.js"></script>
+    <script type="module" src="js/browse.js"></script>
+    <script>
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            if (menu) {
+                menu.classList.toggle('hidden');
+            }
+        }
+
+        // Quick filter function
+        function setQuickFilter(filterType, value) {
+            const filterElement = document.getElementById(`${filterType}-filter`);
+            if (filterElement) {
+                filterElement.value = value;
+                filterElement.dispatchEvent(new Event('change'));
+            }
+        }
+
+        // Keyboard shortcuts
+        document.addEventListener('keydown', (e) => {
+            // Ctrl/Cmd + K to focus search
+            if ((e.ctrlKey || e.metaKey) && e.key === 'k') {
+                e.preventDefault();
+                document.getElementById('search-input').focus();
+            }
+            
+            // Escape to clear search
+            if (e.key === 'Escape' && document.activeElement.id === 'search-input') {
+                document.getElementById('search-input').value = '';
+                document.getElementById('search-input').dispatchEvent(new Event('input'));
+            }
+        });
+
+        // Add search shortcut indicator
+        document.addEventListener('DOMContentLoaded', () => {
+            const searchInput = document.getElementById('search-input');
+            if (searchInput) {
+                const isMac = navigator.platform.toUpperCase().indexOf('MAC') >= 0;
+                const shortcut = isMac ? '⌘K' : 'Ctrl+K';
+                searchInput.placeholder += ` (${shortcut})`;
+            }
+        });
+    </script>
+</body>
+</html>

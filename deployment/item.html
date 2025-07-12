@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Item Details - ReWearX</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://unpkg.com/feather-icons"></script>
+</head>
+<body class="bg-gradient-to-br from-emerald-50 to-teal-50 min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-lg border-b border-emerald-100">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="index.html" class="text-2xl font-bold text-emerald-600">ReWearX</a>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="browse.html" class="text-gray-700 hover:text-emerald-600 transition">Browse</a>
+                    <a href="upload.html" class="text-gray-700 hover:text-emerald-600 transition">Upload</a>
+                    <a href="dashboard.html" class="text-gray-700 hover:text-emerald-600 transition">Dashboard</a>
+                    <div class="relative">
+                        <button id="profileDropdown" class="flex items-center space-x-2 text-gray-700 hover:text-emerald-600">
+                            <div id="userAvatar" class="w-8 h-8 bg-emerald-100 rounded-full flex items-center justify-center">
+                                <i data-feather="user" class="w-4 h-4"></i>
+                            </div>
+                            <span id="userName">User</span>
+                        </button>
+                        <div id="dropdownMenu" class="hidden absolute right-0 mt-2 w-48 bg-white rounded-md shadow-lg border">
+                            <a href="#" id="logoutBtn" class="block px-4 py-2 text-gray-700 hover:bg-gray-50">Logout</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Breadcrumb -->
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+        <nav class="flex" aria-label="Breadcrumb">
+            <ol class="inline-flex items-center space-x-1 md:space-x-3">
+                <li><a href="index.html" class="text-gray-500 hover:text-emerald-600">Home</a></li>
+                <li><span class="text-gray-400">/</span></li>
+                <li><a href="browse.html" class="text-gray-500 hover:text-emerald-600">Browse</a></li>
+                <li><span class="text-gray-400">/</span></li>
+                <li><span id="breadcrumbTitle" class="text-emerald-600 font-medium">Item Details</span></li>
+            </ol>
+        </nav>
+    </div>
+
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <!-- Loading State -->
+        <div id="loadingState" class="flex justify-center py-12">
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-emerald-600"></div>
+        </div>
+
+        <!-- Error State -->
+        <div id="errorState" class="hidden text-center py-12">
+            <i data-feather="alert-circle" class="w-16 h-16 text-red-500 mx-auto mb-4"></i>
+            <h2 class="text-2xl font-bold text-gray-900 mb-2">Item Not Found</h2>
+            <p class="text-gray-600 mb-6">This item may have been removed or is no longer available.</p>
+            <a href="browse.html" class="inline-flex items-center px-6 py-3 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                <i data-feather="arrow-left" class="w-4 h-4 mr-2"></i>
+                Back to Browse
+            </a>
+        </div>
+
+        <!-- Item Content -->
+        <div id="itemContent" class="hidden">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-12">
+                <!-- Image Gallery -->
+                <div class="space-y-4">
+                    <div class="aspect-square bg-white rounded-xl shadow-sm overflow-hidden border border-emerald-100">
+                        <img id="mainImage" src="" alt="" class="w-full h-full object-cover">
+                    </div>
+                    <div id="thumbnailContainer" class="grid grid-cols-4 gap-2">
+                        <!-- Thumbnails will be loaded here -->
+                    </div>
+                </div>
+
+                <!-- Item Details -->
+                <div class="space-y-6">
+                    <div>
+                        <h1 id="itemTitle" class="text-3xl font-bold text-gray-900 mb-2"></h1>
+                        <div class="flex items-center space-x-4 mb-4">
+                            <span id="itemCategory" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium bg-emerald-100 text-emerald-800"></span>
+                            <span id="itemSize" class="text-gray-600"></span>
+                            <span id="itemCondition" class="text-gray-600"></span>
+                        </div>
+                        <p id="itemDescription" class="text-gray-700 leading-relaxed"></p>
+                    </div>
+
+                    <!-- Points & Status -->
+                    <div class="bg-white rounded-xl p-6 border border-emerald-100">
+                        <div class="flex items-center justify-between mb-4">
+                            <div>
+                                <p class="text-sm text-gray-600">Points Value</p>
+                                <p id="itemPoints" class="text-2xl font-bold text-emerald-600"></p>
+                            </div>
+                            <div class="text-right">
+                                <p class="text-sm text-gray-600">Status</p>
+                                <span id="itemStatus" class="inline-flex items-center px-3 py-1 rounded-full text-sm font-medium"></span>
+                            </div>
+                        </div>
+                        <div class="grid grid-cols-2 gap-4 text-sm text-gray-600">
+                            <div>
+                                <span class="font-medium">Brand:</span>
+                                <span id="itemBrand"></span>
+                            </div>
+                            <div>
+                                <span class="font-medium">Color:</span>
+                                <span id="itemColor"></span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Exchange Options -->
+                    <div id="exchangeOptions" class="space-y-4">
+                        <h3 class="text-lg font-semibold text-gray-900">Exchange Options</h3>
+                        
+                        <!-- Redeem with Points -->
+                        <div id="redeemOption" class="bg-white rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Redeem with Points</h4>
+                                    <p class="text-sm text-gray-600">Use your green points to get this item</p>
+                                </div>
+                                <button id="redeemBtn" class="px-6 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition font-medium">
+                                    Redeem Now
+                                </button>
+                            </div>
+                            <div class="mt-4 flex items-center text-sm">
+                                <span class="text-gray-600">Your Points:</span>
+                                <span id="userPoints" class="ml-2 font-medium text-emerald-600">0</span>
+                                <span class="mx-2 text-gray-400">•</span>
+                                <span class="text-gray-600">Needed:</span>
+                                <span id="pointsNeeded" class="ml-2 font-medium text-orange-600">0</span>
+                            </div>
+                        </div>
+
+                        <!-- Swap Option -->
+                        <div id="swapOption" class="bg-white rounded-xl p-6 border border-emerald-100">
+                            <div class="flex items-center justify-between">
+                                <div>
+                                    <h4 class="font-medium text-gray-900">Propose a Swap</h4>
+                                    <p class="text-sm text-gray-600">Exchange this item with one of yours</p>
+                                </div>
+                                <button id="swapBtn" class="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition font-medium">
+                                    Propose Swap
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Owner Info -->
+                    <div class="bg-white rounded-xl p-6 border border-emerald-100">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-4">Shared by</h3>
+                        <div class="flex items-center space-x-4">
+                            <img id="ownerAvatar" src="" alt="" class="w-12 h-12 rounded-full">
+                            <div>
+                                <p id="ownerName" class="font-medium text-gray-900"></p>
+                                <div class="flex items-center space-x-2 text-sm text-gray-600">
+                                    <span id="ownerRating" class="flex items-center">
+                                        <i data-feather="star" class="w-4 h-4 text-yellow-400 mr-1"></i>
+                                        4.8
+                                    </span>
+                                    <span>•</span>
+                                    <span id="ownerItems">12 items shared</span>
+                                </div>
+                            </div>
+                            <button id="contactOwnerBtn" class="ml-auto px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                                Message
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Tags -->
+                    <div id="tagsContainer" class="hidden">
+                        <h3 class="text-lg font-semibold text-gray-900 mb-3">Tags</h3>
+                        <div id="tagsList" class="flex flex-wrap gap-2">
+                            <!-- Tags will be loaded here -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Items -->
+            <div class="mt-16">
+                <h2 class="text-2xl font-bold text-gray-900 mb-8">Similar Items</h2>
+                <div id="similarItemsContainer" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                    <!-- Similar items will be loaded here -->
+                    <div class="flex justify-center col-span-full py-8">
+                        <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-600"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Swap Modal -->
+    <div id="swapModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-2xl w-full max-h-90vh overflow-y-auto">
+            <div class="p-6 border-b border-gray-200">
+                <div class="flex items-center justify-between">
+                    <h3 class="text-xl font-semibold">Propose a Swap</h3>
+                    <button id="closeSwapModal" class="text-gray-400 hover:text-gray-600">
+                        <i data-feather="x" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+            <div class="p-6">
+                <div class="mb-6">
+                    <h4 class="font-medium mb-3">Select an item to offer:</h4>
+                    <div id="userItemsForSwap" class="space-y-3 max-h-60 overflow-y-auto">
+                        <!-- User's items will be loaded here -->
+                    </div>
+                </div>
+                <div class="mb-6">
+                    <label for="swapMessage" class="block text-sm font-medium text-gray-700 mb-2">
+                        Message (optional)
+                    </label>
+                    <textarea id="swapMessage" 
+                              rows="3" 
+                              class="w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-emerald-500 focus:border-emerald-500"
+                              placeholder="Add a personal message to your swap proposal..."></textarea>
+                </div>
+                <div class="flex space-x-4">
+                    <button id="cancelSwap" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button id="submitSwap" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                        Send Proposal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Redeem Confirmation Modal -->
+    <div id="redeemModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
+        <div class="bg-white rounded-xl max-w-md w-full p-6">
+            <div class="text-center">
+                <div class="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                    <i data-feather="check-circle" class="w-8 h-8 text-emerald-600"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-2">Confirm Redemption</h3>
+                <p class="text-gray-600 mb-6">Are you sure you want to redeem this item for <span id="confirmPoints" class="font-medium text-emerald-600"></span> points?</p>
+                <div class="flex space-x-4">
+                    <button id="cancelRedeem" class="flex-1 px-4 py-2 border border-gray-300 text-gray-700 rounded-lg hover:bg-gray-50 transition">
+                        Cancel
+                    </button>
+                    <button id="confirmRedeem" class="flex-1 px-4 py-2 bg-emerald-600 text-white rounded-lg hover:bg-emerald-700 transition">
+                        Confirm
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module" src="js/item.js"></script>
+    <script>feather.replace()</script>
+</body>
+</html>
